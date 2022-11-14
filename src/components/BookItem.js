@@ -3,6 +3,12 @@ import React from "react";
 function BookItem(props) {
   const { book, changeBookShelf } = props;
 
+  // console.log("IN Book item ", book?.imageLinks?.thumbnail);
+
+  const handlerImg = () => {
+    if (book?.imageLinks?.thumbnail === undefined) return;
+    else return book?.imageLinks?.thumbnail;
+  };
   return (
     <div className="book">
       <div className="book-top">
@@ -11,7 +17,7 @@ function BookItem(props) {
           style={{
             width: 128,
             height: 193,
-            backgroundImage: `url(${book.imageLinks.thumbnail})`,
+            backgroundImage: `url(${handlerImg()})`,
           }}
         ></div>
         <div className="book-shelf-changer">
@@ -30,7 +36,11 @@ function BookItem(props) {
         </div>
       </div>
       <div className="book-title">{book.title}</div>
-      <div className="book-authors">{book.publisher}</div>
+      {book.authors?.map((author) => (
+        <div key={author} className="book-authors">
+          {author}
+        </div>
+      ))}
     </div>
   );
 }

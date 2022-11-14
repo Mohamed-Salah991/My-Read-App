@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { search } from "../BooksAPI";
 import BookItem from "../components/BookItem";
-function Search(props) {
+
+function Search({ updateBooks, allBooks }) {
   const [books, setBooks] = useState([]);
   const [inputValue, SetInputValue] = useState("");
 
@@ -11,24 +12,36 @@ function Search(props) {
   };
 
   useEffect(() => {
-    let isActive = true;
+    try {
+      let isActive = true;
 
-    if (inputValue) {
-      search(inputValue).then((data) => {
-        if (data.error) {
-          setBooks([]);
-        } else {
-          if (isActive) {
-            setBooks(data);
+      if (inputValue) {
+        search(inputValue).then((data) => {
+          console.log(data);
+          if (data.error) {
+            setBooks([]);
+          } else {
+            if (isActive) {
+              let newSearchBooks = data.map((book) => {
+                let otherBook = allBooks.find((b) => b.id === book.id);
+                // console.log(otherBook);
+                if (otherBook) return otherBook;
+                else return book;
+              });
+              // allBooks.
+              setBooks(newSearchBooks);
+            }
           }
-        }
-      });
-    }
+        });
+      }
 
-    return () => {
-      isActive = false;
-      setBooks([]);
-    };
+      return () => {
+        isActive = false;
+        setBooks([]);
+      };
+    } catch (error) {
+      console.log(error);
+    }
   }, [inputValue]);
 
   // console.log(books);
@@ -51,7 +64,7 @@ function Search(props) {
         <ol className="books-grid">
           {books.map((book) => (
             <li key={book.id}>
-              <BookItem book={book} changeBookShelf={props.updateBooks} />
+              <BookItem book={book} changeBookShelf={updateBooks} />
             </li>
           ))}
         </ol>

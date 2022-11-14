@@ -40,6 +40,7 @@ function App() {
     setFlip((t) => !t);
   };
 
+  // console.log(allBooks);
   return (
     <div className="app">
       <Routes>
@@ -57,7 +58,7 @@ function App() {
         <Route
           exact
           path="/search"
-          element={<Search updateBooks={updateBookShelf} />}
+          element={<Search updateBooks={updateBookShelf} allBooks={allBooks} />}
         />
       </Routes>
     </div>

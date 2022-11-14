@@ -92,3 +92,17 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
 
 For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Main Page
+
+Show all books shelf and you can change shelf, the data will re-render without reload the page
+
+## Book Component
+
+- responsible for render books in good view
+- you can also use it in search page and inside every shelf
+
+## Routing
+
+- Home page
+- Search page
